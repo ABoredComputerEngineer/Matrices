@@ -1,49 +1,57 @@
 #include <stdio.h>
-#include "matrixIO.h"
+#define MAXCOL 10
+#define MAXROW 10
 
-void matAdd(matrix,matrix,int,int,matrix);
+void matIn(int [MAXROW][MAXCOL],int,int);
+void matOut(int [MAXROW][MAXCOL],int,int);
 
 void main(){
-	matrix matA, matB, matC;
-	int rowA,colA;
-	int rowB,colB;
-	int i,j;
-	printf("Enter dimension for matrix A:::: \n");
-	scanf("%d%d",&rowA,&colA);
-	printf("\n");
+	int matA[MAXROW][MAXCOL], matB[MAXROW][MAXCOL],matC[MAXROW][MAXCOL], i,j;
+	int rowA,colA,rowB,colB;
 
-	printf("Enter dimension for matrix B:::: \n");
+	printf("Enter the dimension of matrix A \n"); 
+	scanf("%d%d",&rowA,&colA);
+	printf("\nEnter the dimension of matrix B \n");
 	scanf("%d%d",&rowB,&colB);
 	printf("\n");
-	printf("Enter matrix A:: \n");
+
+	printf("Enter the data for matrix A::\n");
 	matIn(matA,rowA,colA);
-	printf("Enter matrix B:: \n");
+	printf("\nEnter the data for matrix B:: \n");
 	matIn(matB,rowB,colB);
 
-	printf("\n");
-
-	printf("the matrix A:::::::\n");
+	printf("\nThe matrix A is :::: \n");
 	matOut(matA,rowA,colA);
-	printf("The matrix B:::::::\n");
-
+	printf("\nThe matrix B is ::: \n");
 	matOut(matB,rowB,colB);
 
-	printf("\n");
+	if ( rowA == rowB && colB == colA){
+		for( i = 0; i<rowA; i++)
+			for( j = 0; j<colA; j++)
+				matC[i][j] = matA[i][j] + matB[i][j];
+		printf("The sum of your matrices is \n");
+		matOut(matC,rowA,colA);
+	} else {
+		printf("Dimension mismatch");
+	}
 
-	if ( rowA==rowB && colA==colB )
-		matAdd(matA,matB,rowA,colA,matC);
-	else 
-		printf("The dimensions of the matrix do not match for addition");
-
-
-	printf("The sum of the two matrices is :::; \n");
-	matOut(matC,rowA,colA);
 }
 
-
-void matAdd(matrix a,matrix b,int row, int col,matrix sum){
+void matIn(int a[MAXROW][MAXCOL], int row,int col){
 	int i,j;
-	for ( i = 0; i<row; i++)
-			for( j = 0; j<col;j++)
-				sum[i][j] = a[i][j]+b[i][j];
+	for ( i = 0; i<row; i++){
+		printf("\nRow %d:\t",i+1);
+		for ( j = 0; j<col; j++)
+			scanf("%d",&a[i][j]);
+	}
+		
+}
+
+void matOut(int a[MAXROW][MAXCOL],int row, int col){
+	int i,j;
+	for ( i = 0; i<row; i++){
+		for ( j  = 0 ; j<col; j++)
+			printf("%d\t",a[i][j]);
+		printf("\n");
+	}
 }
